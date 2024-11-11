@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  username      String    @unique
+  name          String?
+  image         String?
+  watchlist     Watchlist[]
+  reviews       Review[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Anime {
+  id            Int       @id
+  title         String
+  coverImage    String
+  synopsis      String?
+  rating        Float?
+  watchlist     Watchlist[]
+  reviews       Review[]
+}
+
+model Watchlist {
+  id        String   @id @default(cuid())
+  status    Status
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  anime     Anime    @relation(fields: [animeId], references: [id])
+  animeId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, animeId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Float
+  content   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  anime     Anime    @relation(fields: [animeId], references: [id])
+  animeId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Status {
+  WATCHING
+  COMPLETED
+  PLAN_TO_WATCH
+  DROPPED
+}
