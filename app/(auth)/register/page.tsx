@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/app/lib/supabase/config'
+import { createClient } from '@/app/lib/supabase/config'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -20,7 +20,7 @@ export default function RegisterPage() {
     setError(null)
 
     try {
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { error: signUpError } = await createClient().auth.signUp({
         email,
         password,
         options: {
@@ -33,7 +33,7 @@ export default function RegisterPage() {
       if (signUpError) throw signUpError
 
       // Create user profile in your database
-      const { error: profileError } = await supabase
+      const { error: profileError } = await createClient()
         .from('profiles')
         .insert([
           {

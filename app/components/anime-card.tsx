@@ -32,19 +32,27 @@ export default function AnimeCard({ anime, priority = false }: AnimeCardProps) {
           className="object-cover"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <div className="absolute bottom-0 p-4 text-white">
-            <h3 className="font-semibold line-clamp-2">{anime.title}</h3>
-            {anime.score > 0 && (
-              <div className="flex items-center gap-1 mt-2">
-                <Star className="w-4 h-4 fill-yellow-400 stroke-yellow-400" />
-                <span className="text-sm">{anime.score.toFixed(1)}</span>
-              </div>
-            )}
-            {anime.year && (
-              <span className="text-sm text-gray-300">{anime.year}</span>
-            )}
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="p-4 text-white h-full flex flex-col justify-center items-center text-center">
+            <h3 className="font-semibold line-clamp-2 mb-2">{anime.title}</h3>
+            <div className="flex items-center gap-2">
+              {anime.score > 0 && (
+                <div className="flex items-center gap-1">
+                  <Star className="w-4 h-4 fill-yellow-400 stroke-yellow-400" />
+                  <span className="text-sm">{anime.score.toFixed(1)}</span>
+                </div>
+              )}
+              {anime.year > 0 && (
+                <span className="text-sm text-gray-300">({anime.year})</span>
+              )}
+            </div>
           </div>
+        </div>
+        
+        <div className="absolute bottom-0 left-0 right-0 bg-black/80 p-2">
+          <h3 className="text-white text-sm text-center line-clamp-1">
+            {anime.title}
+          </h3>
         </div>
       </div>
     </Link>

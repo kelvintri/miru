@@ -74,3 +74,18 @@ export async function getAnimeById(id: number) {
     { revalidate: 86400 }
   );
 }
+
+export async function getAnimeCharacters(id: number) {
+  const res = await fetch(`${JIKAN_API_BASE}/anime/${id}/characters`);
+  return res.json();
+}
+
+export async function getAnimeStaff(id: number) {
+  const res = await fetch(`${JIKAN_API_BASE}/anime/${id}/staff`);
+  return res.json();
+}
+
+export async function getAnimeRecommendations(id: number) {
+  const res = await fetch(`${JIKAN_API_BASE}/anime/${id}/recommendations`);
+  return res.json();
+}
