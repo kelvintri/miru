@@ -1,5 +1,6 @@
 import { searchAnime } from '@/app/lib/jikan'
 import AnimeCard from '@/app/components/anime-card'
+import { AnimeResponse } from '../types';
 
 interface SearchPageProps {
   searchParams: { q: string; page?: string }
@@ -16,12 +17,18 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       </h1>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {data.map((anime: any) => (
-          <AnimeCard key={anime.mal_id} anime={anime} />
+        {data?.map((anime: AnimeResponse, index: number) => (
+          <AnimeCard 
+            key={`${anime.mal_id}-${index}`} 
+            anime={{
+              ...anime,
+              year: anime.year ?? 0
+            }} 
+          />
         ))}
       </div>
 
-      {data.length === 0 && (
+      {(!data || data.length === 0) && (
         <p className="text-center text-gray-500 mt-8">
           No results found for "{q}"
         </p>

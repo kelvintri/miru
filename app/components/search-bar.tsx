@@ -55,16 +55,16 @@ export default function SearchBar() {
           onChange={(e) => setQuery(e.target.value)}
           className="w-full pl-10 pr-4 py-2"
         />
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
       </form>
 
       {showResults && results.length > 0 && (
-        <div className="absolute z-50 w-full mt-2 bg-white rounded-lg shadow-lg border">
+        <div className="absolute z-50 w-full mt-2 bg-background rounded-lg shadow-lg border">
           {results.map((anime) => (
             <Link
               key={anime.mal_id}
               href={`/anime/${anime.mal_id}`}
-              className="flex items-center gap-3 p-3 hover:bg-gray-100"
+              className="flex items-center gap-3 p-3 hover:bg-muted transition-colors"
               onClick={() => setShowResults(false)}
             >
               <Image
@@ -77,7 +77,7 @@ export default function SearchBar() {
               <div>
                 <h4 className="font-medium line-clamp-1">{anime.title}</h4>
                 {anime.year && (
-                  <p className="text-sm text-gray-500">{anime.year}</p>
+                  <p className="text-sm text-muted-foreground">{anime.year}</p>
                 )}
               </div>
             </Link>
@@ -86,7 +86,7 @@ export default function SearchBar() {
           {query.length >= 3 && (
             <Link
               href={`/search?q=${encodeURIComponent(query)}`}
-              className="block p-3 text-center text-sm text-blue-600 hover:bg-gray-100 border-t"
+              className="block p-3 text-center text-sm text-primary hover:bg-muted transition-colors border-t"
               onClick={() => setShowResults(false)}
             >
               View all results
